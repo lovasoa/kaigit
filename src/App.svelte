@@ -1,6 +1,6 @@
 <script lang="ts">
   import GitRepo from "./GitRepo.svelte";
-  let path: string = "/home/olojkine/dev/candilib-auto/";
+  let path: string = "";
 </script>
 
 <header class:haspath={path}>
