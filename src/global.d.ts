@@ -7,6 +7,9 @@ interface GitRepo {
 interface Commit {
     type: "Commit";
     parents: string[];
+    author: string;
+    message: string;
+    tree:string;
 }
 
 interface Tree {
@@ -14,4 +17,20 @@ interface Tree {
     children: { name: string; id: string }[];
 }
 
-type GitObject = Commit | Tree;
+interface GitBlob {
+    type: "Blob";
+    size: number;
+    short_contents: string;
+}
+
+interface Tag {
+    type: "Tag";
+    name: string;
+    target: string;
+}
+
+interface Unknown {
+    type: "Unknown";
+}
+
+type GitObject = Commit | Tree | GitBlob | Tag | Unknown;
