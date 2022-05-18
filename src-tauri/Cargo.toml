@@ -1,11 +1,11 @@
 [package]
-name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-default-run = "app"
+name = "kaigit"
+version = "1.0.0"
+description = "Explore git internals"
+authors = ["Ophir Lojkine"]
+license = "MIT"
+repository = "https://github.com/lovasoa/kaigit"
+default-run = "kaigit"
 edition = "2021"
 rust-version = "1.57"
 
