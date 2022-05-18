@@ -2,6 +2,13 @@
 
 interface GitRepo {
     objects: string[];
+    references: Reference[];
+}
+
+interface Reference {
+    name: string;
+    target: string;
+    is_symbolic: boolean;
 }
 
 interface Commit {

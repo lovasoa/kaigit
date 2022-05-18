@@ -29,8 +29,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
-      "longDescription": "",
+      "identifier": "dev.ophir.kaigit",
+      "longDescription": "Git internals visualizer",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",

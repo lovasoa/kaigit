@@ -93,21 +93,44 @@ impl From<git2::Object<'_>> for Object {
 }
 
 #[derive(Serialize)]
+struct Reference {
+  name: String,
+  target: Option<String>,
+  is_symbolic: bool,
+}
+
+impl From<git2::Reference<'_>> for Reference {
+  fn from(reference: git2::Reference) -> Self {
+    let hard_target = reference.target().map(|i| i.to_string());
+    let sym_target = reference.symbolic_target().map(|i| i.to_string());
+    let is_symbolic = sym_target.is_some();
+    Reference {
+      name: reference.name().unwrap_or_default().to_string(),
+      target: hard_target.or(sym_target),
+      is_symbolic,
+    }
+  }
+}
+
+#[derive(Serialize)]
 struct Repo {
-  index: Vec<String>,
   objects: Vec<String>,
+  references: Vec<Reference>,
 }
 
 fn git_data_raw(path: String) -> Result<Repo, git2::Error> {
   let repo = git2::Repository::open(&path)?;
-  let idx = repo.index()?;
   let mut objects = Vec::with_capacity(256);
   repo.odb()?.foreach(|&oid| {
     objects.push(oid.to_string());
     true
   })?;
+  let references = repo
+    .references()?
+    .map(|r| r.map(Reference::from))
+    .collect::<Result<Vec<_>, _>>()?;
   Ok(Repo {
-    index: idx.iter().map(|entry| entry.id.to_string()).collect(),
+    references,
     objects,
   })
 }
